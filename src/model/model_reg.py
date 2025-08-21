@@ -4,10 +4,27 @@ import mlflow
 
 import dagshub
 
-# Initialize Dags hub and set up mlflow experiment tracking
-dagshub.init(repo_owner='anshu57', repo_name='mlops_water_potability', mlflow=True)
-mlflow.set_tracking_uri("https://dagshub.com/anshu57/mlops_water_potability.mlflow")
-mlflow.set_experiment("Final_Model")
+# # Initialize Dags hub and set up mlflow experiment tracking
+# dagshub.init(repo_owner='anshu57', repo_name='mlops_water_potability', mlflow=True)
+# mlflow.set_tracking_uri("https://dagshub.com/anshu57/mlops_water_potability.mlflow")
+# mlflow.set_experiment("Final_Model")
+
+import os
+dagshub_token = os.getenv("DAGSHUB_TOKEN")
+if not dagshub_token:
+    raise EnvironmentError("DAGSHUB_TOKEN env variable is not set")
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
+
+# DagsHub repository details
+dagshub_url = "https://dagshub.com"
+repo_owner = 'anshu57'
+repo_name = 'mlops_water_potability'
+mlflow.set_tracking_uri(f"{dagshub_url}/{repo_owner}/{repo_name}.mlflow")
+mlflow.set_experiment("Final_model")
+
+
 
 
 # Load the run ID and model name from the saved JSON file

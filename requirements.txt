@@ -102,7 +102,7 @@ rich==14.1.0
 rsa==4.9.1
 s3transfer==0.13.1
 scikit-learn==1.7.1
-scipy==1.16.1
+scipy==1.15.3
 seaborn==0.13.2
 semver==3.0.4
 six==1.17.0

@@ -37,3 +37,23 @@ jobs:
          env: 
            DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN}}
          run: python scripts/production.py
+
+
+        # Log in to DockerHub
+       - name: Log in to DockerHub
+         uses: docker/login-action@v2
+         with:
+           username: ${{ secrets.DOCKER_USERNAME }}
+           password: ${{ secrets.DOCKER_TOKEN}}
+  
+        # Build the Docker image
+       - name: Build Docker Image
+         if: ${{ success() }}
+         run: |
+          docker build -t anshu57/water-potability-predictor:latest .
+  
+        # Push the Docker image only if the build step was successful
+       - name: Push Docker Image
+         if: ${{ success() }}
+         run: |
+            docker push anshu57/water-potability-predictor:latest
